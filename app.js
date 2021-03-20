@@ -15,7 +15,7 @@ const server = app.listen(PORT, function () {
   console.log('Server is running on Port:', PORT)
 })
 
-const socketWrapper = require('./socket/index')
+const socketWrapper = require('./socket')
 const sockets = socketWrapper.sockets(server)
 
 app.use(require('./api'))

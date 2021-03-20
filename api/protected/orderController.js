@@ -5,7 +5,7 @@ const timeUtil = require('../../util/timeUtil')
 
 // TODO add by organization id
 router.route('/all').get(function (req, res) {
-  Order.find({ createdDate: timeUtil.extractTime(new Date()).date }).populate('orderContent.menuItemId')
+  Order.find({ createdDate: new Date()}).populate('orderContent.menuItemId')
     .sort({ createdTime: -1 })
     .exec((err, orders) => {
       res.json(orders)
@@ -15,7 +15,7 @@ router.route('/all').get(function (req, res) {
 // TODO add by organization id
 router.route('/:tableCode').get(function (req, res) {
   let id = req.params.tableCode
-  Order.find({ createdDate: timeUtil.extractTime(new Date()).date, tableCode: id }).populate('orderContent.menuItemId')
+  Order.find({ createdDate: new Date(), tableCode: id }).populate('orderContent.menuItemId')
     .sort({ createdTime: -1 })
     .then(allOrdersFromTable => {
       res.json(allOrdersFromTable)

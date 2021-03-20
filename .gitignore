@@ -102,4 +102,4 @@ app/data
 /client-ui/package-lock.json
 /package-lock.json
 
-/order-api/config/credentials.js
+/config/credentials.js
