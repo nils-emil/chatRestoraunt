@@ -2,21 +2,22 @@ version: "2"
 services:
   app:
     container_name: api
-    image: nilsemil/api:v12
+    image: nilsemil/resto-order-api:v6
     restart: always
     environment:
-      - DATABASE_URL=mongo
+      - DATABASE_URL=url
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=rootPass
-      - JWT_KEY=myPrivateKey
+      - JWT_KEY=jwt_key
+      - EMAIL_USERNAME=email
+      - EMAIL_PASSWORD=pw
+      - S3_ACCESS_KEY_ID=S3_ACCESS_KEY_ID
+      - S3_SECRET_ACCESS_KEY=S3_SECRET_ACCESS_KEY
     ports:
       - "8080:4000"
   mongo:
     container_name: mongo
     restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rootPass
     image: mongo
     ports:
       - "27017:27017"

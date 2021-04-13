@@ -1,18 +1,20 @@
 const orderSocketWrapper = require('./orderSocket')
+const socket = require('socket.io')
 
 const sockets = (server) => {
-  const socket = require('socket.io')
-  const io = socket(server)
-
-  console.log("Socket init called")
-  io.on('connection', (socket) => {
-    global.socket = socket
-    global.io = io
-    const orderSocket = orderSocketWrapper.orderSocket(socket, io)
-  })
-  return io;
+    global.activeConnections = []
+    const io = socket(server)
+    console.log("Socket established. Waiting for connection")
+    io.on('connection', (socket) => {
+        global.activeConnections.push(socket)
+        orderSocketWrapper.orderSocket(socket, io)
+        socket.on('disconnect', function () {
+            global.activeConnections = global.activeConnections.filter(e => e.id !== socket.id)
+        });
+    })
+    return io;
 }
 
 module.exports = {
-  sockets: sockets
+    sockets: sockets
 }

@@ -10,9 +10,9 @@ const MenuItemSchema = new Schema({
         type: String,
         required: false
     },
-    organizationId: {
-        type: Schema.Types.ObjectId, ref: 'Organization',
-        required: true
+    visible: {
+        type: Boolean,
+        required: false
     },
     price: {
         type: Number,

@@ -10,21 +10,13 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 const db = require('./config/db').connection
+// require('./mockData/dropdb')
+// require('./mockData/data')
 
 const server = app.listen(PORT, function () {
-  console.log('Server is running on Port:', PORT)
+    console.log('Server is running on Port:', PORT)
 })
 
-const socketWrapper = require('./socket')
-const sockets = socketWrapper.sockets(server)
+const socketWrapper = require('./socket').sockets(server)
 
 app.use(require('./api'))
-
-const User = require('./models/user').User
-const jwt = require('jsonwebtoken')
-global.extractOrganizationFromRequest = async (request) => {
-  const token = request.headers.authorization;
-  const decoded = jwt.verify(token, process.env.JWT_KEY);
-  const user = await User.findById(decoded._id).select('-password')
-  return user.organizationId;
-}

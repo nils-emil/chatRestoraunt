@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-console.log(process.env)
 mongoose.Promise = global.Promise;
-let dbUrl = 'mongodb://' + process.env.DATABASE_URL + ':27017/app';
+let dbUrl = 'mongodb://' + process.env.DATABASE_URL + '/app';
 const connection = mongoose.connect(dbUrl, {useNewUrlParser: true}).then(
     () => {
         console.log('Database is connected')

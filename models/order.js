@@ -16,10 +16,6 @@ const OrderSchema = new Schema({
     tableCode: {
         type: String
     },
-    organizationId: {
-        type: Schema.Types.ObjectId, ref: 'Organization',
-        required: true
-    },
     orderContent: [MenuItemAmountSchema],
     paid: {
         type: Boolean
@@ -28,10 +24,10 @@ const OrderSchema = new Schema({
         type: Boolean
     },
     isWaiting: {
-      type: Boolean
+        type: Boolean
     },
     createdTime: {
-      type: Date
+        type: Date
     },
     callType: {
         type: String
