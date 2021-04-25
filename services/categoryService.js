@@ -37,39 +37,37 @@ module.exports = class CategoryService {
         })
     }
 
+    async syncOrderFields(order) {
+        let categoryToChangePlace = []
+        await Category.find({
+            order: order
+        })
+            .sort({order: 1})
+            .then(category => {
+                categoryToChangePlace = category
+            })
+        await Category.find()
+            .sort({order: 1})
+            .then(category => {
+                categoryToChangePlace = category
+            })
+        if (categoryToChangePlace.length !== 1) {
+            for (let i = 0; i < categoryToChangePlace.length; i++) {
+                categoryToChangePlace[i].order = i;
+                categoryToChangePlace[i].save()
+            }
+        }
+        return categoryToChangePlace;
+    }
+
     async update(categoryDto) {
         let categoryToUpdate = undefined
-        console.log(categoryDto)
         await Category.findOne({_id: categoryDto._id}).then(category => {
             categoryToUpdate = category
         })
-
-        async function syncOrderFields(order) {
-            let categoryToChangePlace = []
-            await Category.find({
-                order: order
-            })
-                .sort({order: 1})
-                .then(category => {
-                    categoryToChangePlace = category
-                })
-            await Category.find()
-                .sort({order: 1})
-                .then(category => {
-                    categoryToChangePlace = category
-                })
-            if (categoryToChangePlace.length !== 1) {
-                for (let i = 0; i < categoryToChangePlace.length; i++) {
-                    categoryToChangePlace[i].order = i;
-                    categoryToChangePlace[i].save()
-                }
-            }
-            return categoryToChangePlace;
-        }
-
         if (categoryToUpdate.order !== categoryDto.order) {
-            await syncOrderFields(categoryToUpdate.order);
-            await syncOrderFields(categoryDto.order);
+            await this.syncOrderFields(categoryToUpdate.order);
+            await this.syncOrderFields(categoryDto.order);
 
             let categoryToChangePlace
             await Category.findOne({
