@@ -6,25 +6,13 @@ const TableSchema = new Schema({
         type: String,
         required: true
     },
-    number: {
+    description: {
         type: String,
-        required: true
+        required: false
     },
-    xPosition: {
-        type: Number,
-        required: true
-    },
-    yPosition: {
-        type: Number,
-        required: true
-    },
-    width: {
-        type: Number,
-        required: true
-    },
-    height: {
-        type: Number,
-        required: true
+    notifications: {
+        type: Boolean,
+        required: false
     }
 })
 

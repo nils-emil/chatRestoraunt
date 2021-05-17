@@ -19,7 +19,7 @@ router.route('/update/:id').post(async function (req, res) {
     return res.json(await categoryService.update(category))
 })
 
-router.route('/delete/:id').delete(function (req, res) {
+router.route('/delete/req.params.id').delete(function (req, res) {
     categoryService.remove(req.params.id).then(r => {
         console.log(`Removed category with id${req.params.id}`)
         MenuItem.remove({categoryId: req.params.id}, () => {

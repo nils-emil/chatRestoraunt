@@ -19,4 +19,13 @@ const server = app.listen(PORT, function () {
 
 const socketWrapper = require('./socket').sockets(server)
 
+function clientErrorHandler (err, req, res, next) {
+    if (req.xhr) {
+        res.status(500).send({ error: 'Something failed!' })
+    } else {
+        next(err)
+    }
+}
+
+app.use(clientErrorHandler);
 app.use(require('./api'))

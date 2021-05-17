@@ -9,10 +9,15 @@ router.get('', async (req, res) => {
     res.send(tables)
 })
 
-router.post('/', auth, async (req, res) => {
-    const tableDto = req.body
-    const table = tableService.update(tableDto)
-    res.send(table)
+router.route('').post(async function (req, res) {
+    await tableService.createOrUpdateTable(req.body)
+    res.send({ok: true})
+});
+
+router.delete('/:id', auth, async (req, res) => {
+    await tableService.delete(req.params.id)
+    res.send({ok: true})
 })
+
 
 module.exports = router
